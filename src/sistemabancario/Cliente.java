@@ -124,7 +124,7 @@ public class Cliente {
 	public String toString() {
 		
 		String str ="=========================" 
-					+"Id: " + this.id + "\n"
+					+ "Id: " + this.id + "\n"
 					+ "Nome: " + this.nome + "\n"
 					+ "Email: " + this.email + "\n"
 					+ "Idade: " + this.idade + "\n"
