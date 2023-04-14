@@ -3,6 +3,7 @@ package sistemabancario;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import static org.hamcrest.CoreMatchers.*;
  * @date 10/03/2023
  */
 
-public class GerenciadoraClientesTest2 {
+public class GerenciadoraClientesTest3 {
 	
 	private GerenciadoraClientes gerClientes;
 	
@@ -80,6 +81,79 @@ public class GerenciadoraClientesTest2 {
 		assertThat(clienteRemovido, is(true));
 		assertThat(gerClientes.getClientesDoBanco().size(), is(1));
 		assertNull(gerClientes.pesquisaCliente(idCliente02));
+	}
+	
+	@Test
+	public void testClienteIdadePermitida1() throws IdadeNaoPermitidaException {
+		//Construção do cenario
+		Cliente cliente = new Cliente(3, "Gabriel", 23, "gabriel@gmail.com", 1, true);
+		
+		//Execução do teste
+		boolean idadeValida = gerClientes.validaIdade(cliente.getIdade());
+		
+		//Validação do teste
+		assertTrue(idadeValida);
+	}
+	
+	@Test
+	public void testClienteIdadePermitida2() throws IdadeNaoPermitidaException {
+		//Construção do cenario
+		Cliente cliente = new Cliente(4, "Diego", 18, "diego@gmail.com", 1, true);
+		
+		//Execução do teste
+		boolean idadeValida = gerClientes.validaIdade(cliente.getIdade());
+		
+		//Validação do teste
+		assertTrue(idadeValida);
+	}
+	
+	@Test
+	public void testClienteIdadePermitida3() throws IdadeNaoPermitidaException {
+		//Construção do cenario
+		Cliente cliente = new Cliente(5, "Clayton", 65, "clayton@gmail.com", 1, true);
+		
+		//Execução do teste
+		boolean idadeValida = gerClientes.validaIdade(cliente.getIdade());
+		
+		//Validação do teste
+		assertTrue(idadeValida);
+	}
+	
+	@Test
+	public void testClienteIdadePermitida4() {
+		//Construção do cenario
+		Cliente cliente = new Cliente(6, "Emanuel", 17, "emanuel@gmail.com", 1, true);
+		
+		//Execução do teste
+
+		try {
+			gerClientes.validaIdade(cliente.getIdade());
+			fail();			
+			
+		} catch (Exception e) {
+			//Validação
+			assertThat(e.getMessage(), is(IdadeNaoPermitidaException.MSG_IDADE_INVALIDA));
+		}
+		
+
+	}
+	
+	@Test
+	public void testClienteIdadePermitida5() {
+		//Construção do cenario
+		Cliente cliente = new Cliente(7, "Felipe", 66, "felipe@gmail.com", 1, true);
+		
+		//Execução do teste
+		
+		try {
+			gerClientes.validaIdade(cliente.getIdade());
+			fail();			
+			
+		} catch (Exception e) {
+			//Validação
+			assertThat(e.getMessage(), is(IdadeNaoPermitidaException.MSG_IDADE_INVALIDA));
+		}
+		
 	}
 
 }
